@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import filedialog
 from processing import *
+import os
+import sys
 
 def browse_file():
     filename = filedialog.askopenfilename()
@@ -18,8 +20,13 @@ def create_window():
     window.title("My EEG Processing App")
     # Размер окна
     window.geometry('700x500')
-    # Иконка приложения
-    window.iconbitmap('D:/PythonProjects/Test_exe/icon.ico')
+
+    # Определяем путь к каталогу исполняемого файла
+    base_dir = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+
+    # Загружаем иконку оттуда
+    icon_path = os.path.join(base_dir, 'icon.ico')
+    root.wm_iconbitmap(icon_path)
 
     global file_path
     file_path = tk.StringVar()
