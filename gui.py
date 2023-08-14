@@ -4,6 +4,11 @@ from processing import *
 import os
 import sys
 
+def resource_path(relative):
+    if hasattr(sys, "_MEIPASS"):
+        return os.path.join(sys._MEIPASS, relative)
+    return os.path.join(relative)
+
 def browse_file():
     filename = filedialog.askopenfilename()
     file_path.set(filename)
@@ -17,16 +22,13 @@ def process_button():
 
 def create_window():
     window = tk.Tk()
-    window.title("My EEG Processing App")
+    window.title("FreqApp")
     # Размер окна
     window.geometry('700x500')
 
-    # Определяем путь к каталогу исполняемого файла
-    base_dir = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
-
     # Загружаем иконку оттуда
-    icon_path = os.path.join(base_dir, 'icon.ico')
-    root.wm_iconbitmap(icon_path)
+    icon_path = resource_path('icon.ico')
+    window.wm_iconbitmap(icon_path)
 
     global file_path
     file_path = tk.StringVar()
